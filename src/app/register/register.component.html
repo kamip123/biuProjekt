@@ -1,0 +1,62 @@
+<form [formGroup]="profileForm" (ngSubmit)="onSubmit()">
+  <mat-card class="Registration-card">
+    <mat-card-header>
+      <mat-card-title>Registration form</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <div class="row">
+        <div class="col">
+          <mat-form-field class="full-width">
+            <input type="text" matInput placeholder="First Name" formControlName="firstName" id="firstName" required>
+          </mat-form-field>
+          <div *ngIf="firstNameCtrl.invalid && (firstNameCtrl.dirty || firstNameCtrl.touched)">
+            <div *ngIf="firstNameCtrl.invalid">Need to be longer than 4</div>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col">
+          <mat-form-field class="full-width">
+            <input type="text" matInput placeholder="Second Name bob" formControlName="lastName" required>
+          </mat-form-field>
+          <div *ngIf="profileForm.controls.lastName.errors?.NotName">Your last name can't be bob</div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col">
+          <mat-form-field class="full-width">
+            <input type="password" matInput placeholder="Password" formControlName="password" required>
+          </mat-form-field>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col">
+          <mat-form-field class="full-width">
+            <input id="repeatPassword" type="password" matInput placeholder="Repeat Password" formControlName="repeatPassword" required>
+          </mat-form-field>
+        </div>
+      </div>
+      <div class="row">
+        <div class="alert alert-danger col" *ngIf="profileForm.controls.repeatPassword.errors?.MatchPassword">
+          <span>Password not match</span>
+        </div>
+      </div>
+      <div formArrayName="company">
+        <h3>Company</h3>
+        <button mat-raised-button color="accent" (click)="addCompany()">Add Company</button>
+        <div class="row" *ngFor="let company of company.controls; let i=index">
+          <div class="col">
+            <mat-form-field class="full-width">
+              <input type="text" matInput placeholder="Company" [formControlName]="i">
+            </mat-form-field>
+          </div>
+        </div>
+      </div>
+    </mat-card-content>
+
+    <mat-card-actions>
+      <button mat-raised-button color="primary" type="submit" (click)="updateProfile()" [disabled]="!profileForm.valid">Submit</button>
+      <span> Form Status: {{ profileForm.status }}</span>
+    </mat-card-actions>
+  </mat-card>
+</form>

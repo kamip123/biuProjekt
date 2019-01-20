@@ -1,0 +1,42 @@
+<div *ngIf="!is_registered">
+  <p>You should register first</p>
+</div>
+<div *ngIf="is_registered">
+  <div *ngIf="!is_loged_in">
+    <form [formGroup]="profileFormLogin" (ngSubmit)="login()">
+      <mat-card class="Registration-card">
+        <mat-card-header>
+          <mat-card-title>Registration form</mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+          <div class="row">
+            <div class="col">
+              <mat-form-field class="full-width">
+                <input type="text" matInput placeholder="First Name" formControlName="firstName" id="firstName"
+                       required>
+              </mat-form-field>
+              <div *ngIf="firstNameCtrl.invalid && (firstNameCtrl.dirty || firstNameCtrl.touched)">
+                <div *ngIf="firstNameCtrl.invalid">Need to be longer than 4</div>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col">
+              <mat-form-field class="full-width">
+                <input type="password" matInput placeholder="Password" formControlName="password" required>
+              </mat-form-field>
+            </div>
+          </div>
+        </mat-card-content>
+
+        <mat-card-actions>
+          <button mat-raised-button color="primary" type="submit" [disabled]="!profileFormLogin.valid">Login</button>
+          <span> Form Status: {{ profileFormLogin.status }}</span>
+        </mat-card-actions>
+      </mat-card>
+    </form>
+  </div>
+  <div *ngIf="is_loged_in">
+    <p>Welcome {{ registeredLogin }}</p>
+  </div>
+</div>
